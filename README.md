@@ -86,3 +86,14 @@ Build the web app
 ```shell
 pnpm build
 ```
+
+
+distributed token to stakeholders like employees and investors
+
+company -> initaialize vesting contract  and add mint and total supply of token
+
+company -> add employees with details like the total amount of token allocated vesting duration and cliff
+
+cliff(initial period where no token at all can be claimed)
+
+emoloyees can view status of  their vested token and claim any unlocked tokens
