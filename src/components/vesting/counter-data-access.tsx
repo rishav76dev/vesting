@@ -1,6 +1,6 @@
 'use client'
 
-import { getCounterProgram, getCounterProgramId } from '@project/anchor'
+import { getVestingProgram, getVestingProgramId } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -10,17 +10,17 @@ import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../use-transaction-toast'
 import { toast } from 'sonner'
 
-export function useCounterProgram() {
+export function useVestingProgram() {
   const { connection } = useConnection()
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
   const provider = useAnchorProvider()
-  const programId = useMemo(() => getCounterProgramId(cluster.network as Cluster), [cluster])
-  const program = useMemo(() => getCounterProgram(provider, programId), [provider, programId])
+  const programId = useMemo(() => getVestingProgramId(cluster.network as Cluster), [cluster])
+  const program = useMemo(() => getVestingProgram(provider, programId), [provider, programId])
 
   const accounts = useQuery({
-    queryKey: ['counter', 'all', { cluster }],
-    queryFn: () => program.account.counter.all(),
+    queryKey: ['vesting', 'all', { cluster }],
+    queryFn: () => program.account.vestingAccount.all(),
   })
 
   const getProgramAccount = useQuery({
@@ -28,7 +28,7 @@ export function useCounterProgram() {
     queryFn: () => connection.getParsedAccountInfo(programId),
   })
 
-  const initialize = useMutation({
+  const createVestingAccount = useMutation({
     mutationKey: ['counter', 'initialize', { cluster }],
     mutationFn: (keypair: Keypair) =>
       program.methods.initialize().accounts({ counter: keypair.publicKey }).signers([keypair]).rpc(),
