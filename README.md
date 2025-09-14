@@ -97,3 +97,4 @@ company -> add employees with details like the total amount of token allocated v
 cliff(initial period where no token at all can be claimed)
 
 emoloyees can view status of  their vested token and claim any unlocked tokens
+![alt text](image-1.png)
